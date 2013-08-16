@@ -5,9 +5,13 @@
         <meta charset="utf-8" />
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
+        <!-- <link type="text/css" rel="stylesheet" href="annotorious/styles/annotorious.css" />-->
+        <link rel="stylesheet" href="annotorious/styles/zenburn.css">
+        <link rel="stylesheet" href="annotorious/styles/theme-dark/annotorious-dark.css" />
 
         <script src="cordova.js"></script>
         <script src="kendo/js/jquery.min.js"></script>
+        <!-- <script src="http://code.jquery.com/jquery-latest.js"></script>-->
         <script src="kendo/js/kendo.mobile.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 
@@ -16,84 +20,52 @@
         <script src="scripts/weather.js"></script>
         <script src="scripts/app.js"></script>
 
+        <script src="annotorious/scripts/highlight.pack.js"></script>
+        <script type="text/javascript" src="annotorious/scripts/annotorious.min.js"></script>
+        <script type="text/javascript" src="http://intridea.github.io/sketch.js/lib/sketch.js"></script>
+
+      
     </head>
     <body>
-        <!--Home-->
-        <div id="tabstrip-home" 
-             data-role="view"  
-             data-title="Home">
 
-            <div data-role="content" class="view-content">
-                <h1>Welcome!</h1>
-                <a id="skin-change" data-role="button" data-click="app.changeSkin">Flat</a>
-                <p>
-                    Icenium&trade; enables you to build cross-platform device applications regardless of your
-                    development platform by combining the convenience of a local development toolset with the
-                    power and flexibility of the cloud.
-                </p>
-                <div class="img"></div>
+        <!--Home-->
+        <div id="tabstrip-annotate"  data-role="view" data-title="Annotate"  >
+            <div data-role="content" style="margin:10px;">
+                Click & Drag to Annotate <img src="images/starbucks_coffee_shop.png" width="300" height="300"  class="annotatable" />
             </div>
         </div>
 
         <!--Login-->
-        <div id="tabstrip-login" 
+        <div id="tabstrip-sketch" 
              data-role="view"  
-             data-title="Login" 
-             data-model="app.loginService.viewModel">
+             data-title="sketch" >
 
-            <div data-role="content" class="view-content">
-                <div class="logo"></div>
-                <h3 data-bind="invisible: isLoggedIn">Enter your credentials:</h3>
-                <h1 class="welcome" data-bind="visible: isLoggedIn">
-                    Welcome, <span data-bind="text: username"></span>!
-                </h1>
-
-                <ul data-role="listview" data-style="inset" data-bind="invisible: isLoggedIn">
-                    <li>
-                        <label>
-                            Username
-                            <input type="text" data-bind="value: username"/>
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            Password
-                            <input type="password" data-bind="value: password" />
-                        </label>
-                    </li>
-                </ul>
-
-                <div class="buttonArea">
-                    <a id="login" data-role="button" data-bind="click: onLogin, invisible: isLoggedIn" class="login-button">Login</a>
-                    <a id="logout" data-role="button" data-bind="click: onLogout, visible: isLoggedIn" class="login-button">Logout</a>
+            <div data-role="content"  >
+                Sketch
+                <div class="tools">
+                    <a href="#tools_sketch" data-tool="marker">Marker</a>
+                    <a href="#tools_sketch" data-tool="eraser">Eraser</a>
                 </div>
+                <div style="border: 1px solid #000;margin:10px">
+                <canvas id="tools_sketch" width="300" height="300" ></canvas>
+                    </div>
+                <script type="text/javascript">
+                    $(function() {
+                        $('#tools_sketch').sketch({defaultColor: "#ff0"});
+                    });
+                </script>
             </div>
 
         </div>
-
+        
         <!--Location-->
         <div id="tabstrip-location" 
-             data-role="view"  
-             data-title="Location" 
-             data-init="app.locationService.initLocation" 
-             data-show="app.locationService.show" 
-             data-hide="app.locationService.hide" 
-             data-model="app.locationService.viewModel" 
-             data-stretch="true">
+             data-role="view" >
 
             <div data-role="content">
-                <div id="map-search-wrap">
-                    <button id="map-navigate-home" data-bind="click: onNavigateHome"></button>
-                    <form onsubmit="return false;">
-                        <input id="map-address" type="search" data-bind="value: address" placeholder="Address"/>
-                        <input id="map-search" type="submit" value="" data-bind="click: onSearchAddress" />
-                    </form>
-                </div>
-                <div id="map-canvas"></div>
+
             </div>
-
         </div>
-
         <!--Weather-->
         <div id="tabstrip-weather" 
              data-role="view"  
@@ -112,7 +84,7 @@
                     <ul class="forecast-list" 
                         data-role="listview" 
                         data-bind="source: weatherDataSource" 
-                        data-template="weather-forecast-template">                    
+                        data-template="weather-forecast-template">
                     </ul>
                 </div>
             </div>
@@ -147,8 +119,8 @@
             <!--Footer-->
             <div data-role="footer">
                 <div data-role="tabstrip">
-                    <a href="#tabstrip-home" data-icon="home">Home</a>
-                    <a href="#tabstrip-login" data-icon="contacts">Login</a>
+                    <a href="#tabstrip-annotate" data-icon="home">Home</a>
+                    <a href="#tabstrip-sketch" data-icon="contacts">Login</a>
                     <a href="#tabstrip-location" data-icon="search">Location</a>
                     <a href="#tabstrip-weather" data-icon="globe">Weather</a>
                 </div>
@@ -156,4 +128,4 @@
         </div>
     </body>
 </html>
-        
+
